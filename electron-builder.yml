@@ -1,0 +1,75 @@
+appId: com.socialdesk.desktop
+productName: SocialDesk
+copyright: Copyright © 2026 SocialDesk · 全平台社交工作台（独立版）
+
+directories:
+  output: release
+  buildResources: assets
+
+# 只打包真正需要的东西：Vite 已经把 React 等依赖打进 dist/index.html，
+# 运行时不依赖任何 node_modules，所以安装包非常小。
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+
+extraResources:
+  - from: bridge
+    to: bridge
+    # 桥的运行日志不要打进安装包
+    filter: ["**/*", "!*.log", "!__pycache__/**"]
+  # 完整使用说明随包发布，用户随时能查
+  - from: 使用说明.md
+    to: 使用说明.md
+  - from: bridge/README-发布桥.md
+    to: bridge/README-发布桥.md
+  # 托盘 / 窗口图标要作为真实文件存在，不能只留在 asar 里
+  - from: assets/icon.png
+    to: icon.png
+  - from: assets/icon.ico
+    to: icon.ico
+
+asar: true
+compression: maximum
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  icon: assets/icon.ico
+  artifactName: SocialDesk-${version}-${arch}.${ext}
+  # 未购买代码签名证书，跳过签名（首次运行 Windows 会提示"未知发布者"，属正常）
+  signAndEditExecutable: true
+  requestedExecutionLevel: asInvoker
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: SocialDesk
+  menuCategory: false
+  deleteAppDataOnUninstall: false
+  installerLanguages:
+    - zh_CN
+    - en_US
+  artifactName: SocialDesk-Setup-${version}.${ext}
+  uninstallDisplayName: SocialDesk 全平台社交工作台
+
+portable:
+  artifactName: SocialDesk-便携版-${version}.${ext}
+
+mac:
+  target: [dmg, zip]
+  category: public.app-category.productivity
+  icon: assets/icon.png
+
+linux:
+  target: [AppImage, deb]
+  category: Office
+  icon: assets/icon.png
+  maintainer: SocialDesk
