@@ -1,0 +1,37 @@
+name: Release
+
+# 打 tag（如 v2.0.0）时自动构建 Windows 安装包并发布到 GitHub Release
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release-win:
+    runs-on: windows-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci --legacy-peer-deps
+
+      - name: 构建 Windows 安装包
+        run: npm run dist:win
+
+      - name: 发布到 GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # release/ 下的 NSIS 安装包 + 便携版（electron-builder.yml 产物）
+          files: |
+            release/*.exe
+          generate_release_notes: true
