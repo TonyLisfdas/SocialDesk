@@ -1,0 +1,53 @@
+{
+  "_说明": "把下面每个平台的 enabled 改成 true，并按你的实际工具改 command。占位符见 README。",
+  "port": 5409,
+  "timeoutSec": 600,
+  "dryRun": false,
+  "platforms": {
+    "xiaohongshu": {
+      "enabled": false,
+      "name": "小红书",
+      "handler": "shell",
+      "command": "python {sau}/examples/upload_video_to_xiaohongshu.py --file \"{video}\" --title \"{title}\" --desc \"{content}\"",
+      "note": "示例：接 dreammis/social-auto-upload（MIT）。把 {sau} 指向你克隆的仓库目录。"
+    },
+    "douyin": {
+      "enabled": false,
+      "name": "抖音",
+      "handler": "shell",
+      "command": "python {sau}/examples/upload_video_to_douyin.py --file \"{video}\" --title \"{title}\" --desc \"{content}\"",
+      "note": "同上，抖音版脚本"
+    },
+    "wechat_channels": {
+      "enabled": false,
+      "name": "视频号",
+      "handler": "shell",
+      "command": "python {sau}/examples/upload_video_to_tencent.py --file \"{video}\" --title \"{title}\" --desc \"{content}\"",
+      "note": "同上，视频号版脚本"
+    },
+    "bilibili": {
+      "enabled": false,
+      "name": "哔哩哔哩",
+      "handler": "shell",
+      "command": "python {sau}/examples/upload_video_to_bilibili.py --file \"{video}\" --title \"{title}\" --desc \"{content}\"",
+      "note": ""
+    },
+    "kuaishou": {
+      "enabled": false,
+      "name": "快手",
+      "handler": "shell",
+      "command": "python {sau}/examples/upload_video_to_kuaishou.py --file \"{video}\" --title \"{title}\" --desc \"{content}\"",
+      "note": ""
+    },
+    "zhihu": {
+      "enabled": false,
+      "name": "知乎",
+      "handler": "shell",
+      "command": "",
+      "note": "自己写个脚本，用 cookie 调知乎的 API；把命令填这里即可。"
+    }
+  },
+  "vars": {
+    "sau": "C:/tools/social-auto-upload"
+  }
+}
