@@ -69,6 +69,22 @@ export interface LogEntry {
   meta?: Record<string, unknown> | null;
 }
 
+export interface MessengerState {
+  serviceId: string;
+  url: string;
+  title: string;
+  loading: boolean;
+  canGoBack: boolean;
+  canGoForward: boolean;
+}
+
+export interface ViewBounds {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export interface BackupInfo {
   name: string;
   path: string;
@@ -122,6 +138,17 @@ interface DesktopBridge {
   schedulerStatus(): Promise<EngineStatus>;
   configureScheduler(patch: Partial<EngineConfig>): Promise<EngineConfig>;
   tickNow(): Promise<EngineStatus>;
+  messenger: {
+    mount(serviceId: string, url: string, bounds?: ViewBounds): Promise<MessengerState | null>;
+    setBounds(bounds: ViewBounds): Promise<{ ok: boolean }>;
+    unmount(): Promise<{ ok: boolean }>;
+    reload(): Promise<{ ok: boolean }>;
+    goBack(): Promise<{ ok: boolean }>;
+    goForward(): Promise<{ ok: boolean }>;
+    home(url: string): Promise<{ ok: boolean }>;
+    state(): Promise<MessengerState | null>;
+  };
+
   logTail(n?: number): Promise<LogEntry[]>;
   logClear(): Promise<{ ok: boolean }>;
   onEvent(fn: (e: BridgeEvent) => void): () => void;
@@ -175,6 +202,49 @@ export const bridge = {
 
   async tickNow(): Promise<EngineStatus | null> {
     return desktop ? desktop.tickNow() : null;
+  },
+
+  /**
+   * 消息聚合：桌面版走原生视图（WebContentsView），
+   * 浏览器版没有这个能力，界面会自动退回 iframe。
+   */
+  get hasNativeGuest(): boolean {
+    return !!desktop?.messenger;
+  },
+
+  messenger: {
+    async mount(serviceId: string, url: string, bounds?: ViewBounds): Promise<MessengerState | null> {
+      if (!desktop?.messenger) return null;
+      return desktop.messenger.mount(serviceId, url, bounds);
+    },
+    async setBounds(bounds: ViewBounds): Promise<void> {
+      if (desktop?.messenger) await desktop.messenger.setBounds(bounds);
+    },
+    async unmount(): Promise<void> {
+      if (desktop?.messenger) await desktop.messenger.unmount();
+    },
+    async reload(): Promise<void> {
+      if (desktop?.messenger) await desktop.messenger.reload();
+    },
+    async goBack(): Promise<void> {
+      if (desktop?.messenger) await desktop.messenger.goBack();
+    },
+    async goForward(): Promise<void> {
+      if (desktop?.messenger) await desktop.messenger.goForward();
+    },
+    async home(url: string): Promise<void> {
+      if (desktop?.messenger) await desktop.messenger.home(url);
+    },
+    async state(): Promise<MessengerState | null> {
+      return desktop?.messenger ? desktop.messenger.state() : null;
+    },
+    /** 订阅原生视图状态（标题、加载中、前进后退） */
+    onState(fn: (s: MessengerState) => void): () => void {
+      if (!desktop) return () => {};
+      return desktop.onEvent((e) => {
+        if (e.type === 'msg:state' && e.payload) fn(e.payload as unknown as MessengerState);
+      });
+    },
   },
 
   async logTail(n = 300): Promise<LogEntry[]> {

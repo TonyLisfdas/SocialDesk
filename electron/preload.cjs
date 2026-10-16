@@ -18,6 +18,16 @@ ipcRenderer.on('sd:event', (_e, evt) => {
   }
 });
 
+ipcRenderer.on('msg:state', (_e, st) => {
+  for (const fn of listeners) {
+    try {
+      fn({ type: 'msg:state', payload: st });
+    } catch {
+      /* ignore */
+    }
+  }
+});
+
 ipcRenderer.on('db:changed', (_e, payload) => {
   for (const fn of listeners) {
     try {
@@ -61,6 +71,18 @@ contextBridge.exposeInMainWorld('socialdesk', {
   schedulerStatus: () => ipcRenderer.invoke('sched:status'),
   configureScheduler: (patch) => ipcRenderer.invoke('sched:configure', patch),
   tickNow: () => ipcRenderer.invoke('sched:tick'),
+
+  /* ---- 消息聚合（网页版嵌入） ---- */
+  messenger: {
+    mount: (serviceId, url, bounds) => ipcRenderer.invoke('msg:mount', { serviceId, url, bounds }),
+    setBounds: (bounds) => ipcRenderer.invoke('msg:setBounds', bounds),
+    unmount: () => ipcRenderer.invoke('msg:unmount'),
+    reload: () => ipcRenderer.invoke('msg:reload'),
+    goBack: () => ipcRenderer.invoke('msg:back'),
+    goForward: () => ipcRenderer.invoke('msg:forward'),
+    home: (url) => ipcRenderer.invoke('msg:home', url),
+    state: () => ipcRenderer.invoke('msg:state'),
+  },
 
   /* ---- 日志 ---- */
   logTail: (n) => ipcRenderer.invoke('log:tail', n),

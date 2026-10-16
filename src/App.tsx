@@ -15,6 +15,7 @@ import { AnalyticsPage } from './pages/Analytics';
 import { AccountsPage } from './pages/Accounts';
 import { SettingsPage } from './pages/Settings';
 import { EnginePage } from './pages/Engine';
+import { MessengerPage } from './pages/Messenger';
 import { uid } from './lib/utils';
 
 export default function App() {
@@ -117,6 +118,7 @@ export default function App() {
           {page === 'analytics' ? <AnalyticsPage /> : null}
           {page === 'accounts' ? <AccountsPage /> : null}
           {page === 'engine' ? <EnginePage /> : null}
+          {page === 'messenger' ? <MessengerPage /> : null}
           {page === 'settings' ? <SettingsPage /> : null}
         </main>
       </div>

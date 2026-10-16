@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, CalendarDays, PenLine, Images, Lightbulb, ListChecks, Inbox,
-  BarChart3, Users, Settings, EyeOff, ChevronRight, Sparkles, Radio,
+  BarChart3, Users, Settings, EyeOff, ChevronRight, Sparkles, Radio, MessagesSquare,
 } from 'lucide-react';
 import { useStore } from '../lib/store';
 import { PLATFORMS, PLATFORM_MAP } from '../platforms/registry';
@@ -9,7 +9,7 @@ import { cn } from '../lib/utils';
 
 export type PageKey =
   | 'dashboard' | 'calendar' | 'composer' | 'media' | 'ideas'
-  | 'queue' | 'engine' | 'inbox' | 'analytics' | 'accounts' | 'settings';
+  | 'queue' | 'engine' | 'inbox' | 'analytics' | 'messenger' | 'accounts' | 'settings';
 
 export const NAV: { key: PageKey; icon: typeof LayoutDashboard; group: 'content' | 'insight' | 'system' }[] = [
   { key: 'dashboard', icon: LayoutDashboard, group: 'content' },
@@ -20,6 +20,7 @@ export const NAV: { key: PageKey; icon: typeof LayoutDashboard; group: 'content'
   { key: 'queue', icon: ListChecks, group: 'content' },
   { key: 'inbox', icon: Inbox, group: 'insight' },
   { key: 'analytics', icon: BarChart3, group: 'insight' },
+  { key: 'messenger', icon: MessagesSquare, group: 'insight' },
   { key: 'accounts', icon: Users, group: 'system' },
   { key: 'engine', icon: Radio, group: 'system' },
   { key: 'settings', icon: Settings, group: 'system' },

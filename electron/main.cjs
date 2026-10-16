@@ -18,6 +18,7 @@ const logmod = require('./logger.cjs');
 const db = require('./db.cjs');
 const sched = require('./scheduler.cjs');
 const { describe: describeAdapters, channelMap, getAdapter } = require('./adapters/index.cjs');
+const messenger = require('./messenger.cjs');
 const { publishPost, applyResults } = require('./publisher.cjs');
 
 const isDev = !app.isPackaged;
@@ -267,6 +268,28 @@ function buildMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
+/* --------------------------- 消息聚合会话 --------------------------- */
+
+let msgSession = null;
+
+/**
+ * 给网页版聚合单独开一个持久化会话：
+ * · 登录态不会跟主界面混在一起
+ * · 退出重开还在（persist: 前缀 = 落盘）
+ * · 统一去掉 Electron 标识的 UA，避免被网站判定为"不支持的浏览器"
+ */
+function getMsgSession() {
+  if (msgSession) return msgSession;
+  const { session: electronSession } = require('electron');
+  msgSession = electronSession.fromPartition(messenger.PARTITION);
+  msgSession.setUserAgent(messenger.browserUA(msgSession));
+  // 允许网页版用摄像头/麦克风（Discord 语音、WhatsApp 通话要用）
+  msgSession.setPermissionRequestHandler((_wc, permission, callback) => {
+    callback(['media', 'notifications', 'clipboard-sanitized-write'].includes(permission));
+  });
+  return msgSession;
+}
+
 /* --------------------------- IPC --------------------------- */
 
 function registerIpc() {
@@ -455,6 +478,37 @@ function registerIpc() {
     logmod.clear();
     return { ok: true };
   });
+
+  /* ---------------- 消息聚合（网页版嵌入） ---------------- */
+  ipcMain.handle('msg:mount', (_e, { serviceId, url, bounds }) => {
+    const ses = getMsgSession();
+    return messenger.mount(serviceId, url, bounds, ses);
+  });
+  ipcMain.handle('msg:setBounds', (_e, bounds) => {
+    messenger.setBounds(bounds);
+    return { ok: true };
+  });
+  ipcMain.handle('msg:unmount', () => {
+    messenger.unmount();
+    return { ok: true };
+  });
+  ipcMain.handle('msg:reload', () => {
+    messenger.actions.reload();
+    return { ok: true };
+  });
+  ipcMain.handle('msg:back', () => {
+    messenger.actions.goBack();
+    return { ok: true };
+  });
+  ipcMain.handle('msg:forward', () => {
+    messenger.actions.goForward();
+    return { ok: true };
+  });
+  ipcMain.handle('msg:home', (_e, url) => {
+    messenger.actions.home(url);
+    return { ok: true };
+  });
+  ipcMain.handle('msg:state', () => messenger.actions.state());
 }
 
 /* --------------------------- 启动 --------------------------- */
@@ -499,6 +553,12 @@ if (!gotLock) {
     createWindow();
     createTray();
 
+    // 消息聚合：把事件推回渲染进程（标题 / 加载中 / 前进后退可用性）
+    messenger.init({
+      window: win,
+      onState: (st) => send('msg:state', st),
+    });
+
     // 引擎事件 → 渲染进程 + 系统通知
     sched.setSink((evt) => {
       send('sd:event', evt);
@@ -523,6 +583,11 @@ if (!gotLock) {
 
   app.on('before-quit', () => {
     app.isQuitting = true;
+    try {
+      messenger.actions.destroyAll();
+    } catch {
+      /* ignore */
+    }
     db.snapshot('quit');
     logmod.info('SocialDesk 退出');
   });

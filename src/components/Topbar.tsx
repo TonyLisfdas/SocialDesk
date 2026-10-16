@@ -15,6 +15,7 @@ const TITLES: Record<PageKey, { zh: string; en: string }> = {
   analytics: { zh: '数据分析', en: 'Analytics' },
   accounts: { zh: '账号管理', en: 'Accounts' },
   engine: { zh: '发布引擎', en: 'Publish engine' },
+  messenger: { zh: '消息聚合', en: 'Messages' },
   settings: { zh: '设置', en: 'Settings' },
 };
 

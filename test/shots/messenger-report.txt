@@ -1,0 +1,29 @@
+CSS 像素 vs 屏幕像素：
+  ✅ 缩放为 100%（截图坐标可直接用）  zoomFactor=1
+  显示器 devicePixelRatio = 1（截图按物理像素输出，属正常）
+
+【whatsapp】
+  ✅ 已加载到目标站点  url=https://web.whatsapp.com/
+  ✅ 拿回了真实页面标题  title="WhatsApp Web"
+  ✅ 子视图有实际画面（非空白）  1180x760 → messenger-whatsapp.png
+  ✅ 画面主色调之外有内容（深浅主题都能识别）  内容像素占比 5.4%（等待 7s）
+  🖼  全窗口截图 → messenger-whatsapp-fullwindow.png
+
+【telegram】
+  ✅ 已加载到目标站点  url=https://web.telegram.org/a/
+  ✅ 拿回了真实页面标题  title="Telegram"
+  ✅ 子视图有实际画面（非空白）  1180x760 → messenger-telegram.png
+  ✅ 画面主色调之外有内容（深浅主题都能识别）  内容像素占比 4.5%（等待 4s）
+  🖼  全窗口截图 → messenger-telegram-fullwindow.png
+
+【discord】
+  ✅ 已加载到目标站点  url=https://discord.com/app
+  ✅ 拿回了真实页面标题  title="Discord"
+  ✅ 子视图有实际画面（非空白）  1180x760 → messenger-discord.png
+  ✅ 画面主色调之外有内容（深浅主题都能识别）  内容像素占比 70.3%（等待 3s）
+  🖼  全窗口截图 → messenger-discord-fullwindow.png
+
+【收尾】
+  ✅ 卸载后主窗口上不再挂着子视图  挂在窗口上的子视图=0（实例缓存另有 3 个，是设计如此：切回服务时页面状态还在）
+
+结果：全部通过 ✅

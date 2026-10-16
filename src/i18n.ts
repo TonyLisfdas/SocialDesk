@@ -342,6 +342,26 @@ export const zh = {
   'eng.retryHint': '全部平台失败时自动重试 2 次（每次间隔一个扫描周期）',
   'eng.autoPublishHint': '到点后由后台进程直接调用平台接口发布，窗口关掉也照发。',
 
+  /* ———————— 消息聚合 ———————— */
+  'nav.messenger': '消息聚合',
+  'msg.services': '服务',
+  'msg.toggleRail': '收起/展开服务列表',
+  'msg.loaded': '已加载',
+  'msg.back': '后退',
+  'msg.forward': '前进',
+  'msg.reload': '刷新',
+  'msg.home': '回到首页',
+  'msg.loading': '正在加载…',
+  'msg.connecting': '正在接入网页版…',
+  'msg.openExternal': '在浏览器打开',
+  'msg.openedExternal': '已用系统浏览器打开',
+  'msg.browserHint': '当前是网页版运行环境，嵌入可能被对方网站拦截（横幅下方为嵌入结果）。桌面版可稳定嵌入，点右上角「在浏览器打开」也能照常用。',
+  'msg.lineFallback': 'LINE 对网页版有地区/账号限制，打不开就用客户端',
+  'msg.openClient': '打开 LINE 客户端',
+  'msg.clientLaunching': '正在唤起 LINE 客户端…',
+  'msg.line': 'LINE',
+  'msg.privacy': '零 API：登录的是你自己的账号，消息走官方网页，本软件不读取、不上传任何聊天内容。',
+
 };
 
 export type TKey = keyof typeof zh;
@@ -685,6 +705,26 @@ export const en: Record<TKey, string> = {
   'eng.migrated': 'Browser-edition data was migrated into the desktop app',
   'eng.retryHint': 'If every platform fails, the engine retries twice (one interval apart)',
   'eng.autoPublishHint': 'At the scheduled time the background process calls the platform API directly — works even with the window closed.',
+
+  /* ———————— Messages ———————— */
+  'nav.messenger': 'Messages',
+  'msg.services': 'Services',
+  'msg.toggleRail': 'Collapse / expand services',
+  'msg.loaded': 'Loaded',
+  'msg.back': 'Back',
+  'msg.forward': 'Forward',
+  'msg.reload': 'Reload',
+  'msg.home': 'Home',
+  'msg.loading': 'Loading…',
+  'msg.connecting': 'Connecting to the web app…',
+  'msg.openExternal': 'Open in browser',
+  'msg.openedExternal': 'Opened in your system browser',
+  'msg.browserHint': 'You are running the web build — the site may refuse to be embedded. The desktop build embeds reliably; "Open in browser" always works.',
+  'msg.lineFallback': 'LINE restricts its web version by region/account — use the desktop app instead',
+  'msg.openClient': 'Open LINE app',
+  'msg.clientLaunching': 'Launching LINE…',
+  'msg.line': 'LINE',
+  'msg.privacy': 'Zero API: you sign in with your own account, messages go through the official websites. This app never reads or uploads your chats.',
 
 };
 
