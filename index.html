@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <!-- 独立版 CSP：只允许本地资源 + 素材协议(sdmedia) + 平台 API 的 https 请求 -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               script-src 'self' 'unsafe-inline' 'unsafe-eval';
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' data: blob: sdmedia: https:;
+               media-src 'self' data: blob: sdmedia: https:;
+               font-src 'self' data:;
+               connect-src 'self' https: wss: ws: sdmedia:;
+               object-src 'none';
+               base-uri 'self';"
+    />
+    <title>SocialDesk · 全平台社交工作台（独立版）</title>
+    <style>
+      html, body, #root { height: 100%; }
+      body { margin: 0; background: #0b0d12; }
+      #boot { display:flex; align-items:center; justify-content:center; height:100vh; color:#7c8595;
+        font: 14px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root"><div id="boot">正在载入 SocialDesk…</div></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

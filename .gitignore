@@ -1,0 +1,16 @@
+# 依赖与构建产物
+node_modules/
+dist/
+release/
+build/
+.vite/
+
+# 运行期文件
+*.log
+bridge/bridge.log
+__pycache__/
+*.pyc
+
+# 系统
+.DS_Store
+Thumbs.db
