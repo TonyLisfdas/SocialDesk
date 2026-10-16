@@ -96,7 +96,7 @@ export function AccountsPage() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-2">
-        <div className="text-[12.5px] text-muted">
+        <div className="text-[13px] text-muted">
           {db.accounts.filter((a) => a.connected).length} / {db.accounts.length} {t('acc.connected')}
         </div>
         <Button size="sm" variant="primary" className="ml-auto" onClick={() => setAddOpen(true)}>
@@ -128,7 +128,7 @@ export function AccountsPage() {
                     <div key={a.id} className="card-raise flex items-center gap-2 px-2.5 py-2">
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
-                          <span className="truncate text-[12.5px] font-medium">{a.displayName}</span>
+                          <span className="truncate text-[13px] font-medium">{a.displayName}</span>
                           {a.connected ? (
                             <Badge className="bg-[color-mix(in_srgb,#22c55e_16%,transparent)] text-ok">{t('acc.connected')}</Badge>
                           ) : (
@@ -170,8 +170,8 @@ export function AccountsPage() {
       <Card>
         <CardHead title={t('acc.perPlatform')} sub={t('acc.perPlatformHint')} />
         <div className="px-4 pb-4">
-          <div className="overflow-hidden rounded-lg border border-line">
-            <div className="grid grid-cols-[minmax(0,1fr)_120px_minmax(0,2fr)] gap-3 bg-raise px-3 py-2 text-[11.5px] font-semibold text-faint">
+          <div className="overflow-hidden rounded-[var(--sd-r-sm)] border border-line">
+            <div className="grid grid-cols-[minmax(0,1fr)_120px_minmax(0,2fr)] gap-3 bg-raise px-3 py-2 text-[12px] font-semibold text-faint">
               <span>{t('comp.platforms')}</span>
               <span>{t('acc.mode')}</span>
               <span>{t('acc.needToken')}</span>
@@ -181,17 +181,17 @@ export function AccountsPage() {
                 <div key={p.id} className="grid grid-cols-[minmax(0,1fr)_120px_minmax(0,2fr)] items-center gap-3 border-t border-line px-3 py-2">
                   <span className="flex min-w-0 items-center gap-2">
                     <PlatformIcon id={p.id} size={18} />
-                    <span className="truncate text-[12.5px]">{lang === 'zh' ? p.nameZh : p.nameEn}</span>
+                    <span className="truncate text-[13px]">{lang === 'zh' ? p.nameZh : p.nameEn}</span>
                   </span>
-                  <span className="flex items-center gap-1 text-[11.5px] text-muted">
+                  <span className="flex items-center gap-1 text-[12px] text-muted">
                     {modeIcon(p.connect)} {CONNECT_LABEL[p.connect][lang === 'zh' ? 'zh' : 'en']}
                     {(bridge.isDesktop
                       ? !!channelMap && channelMap[p.id] !== 'manual' && channelMap[p.id] !== undefined
                       : isRealAdapter(p.id)) ? (
-                      <span className="rounded bg-[color-mix(in_srgb,#22c55e_16%,transparent)] px-1 text-[9.5px] font-bold text-ok">LIVE</span>
+                      <span className="rounded bg-[color-mix(in_srgb,#22c55e_16%,transparent)] px-1 text-[11px] font-bold text-ok">LIVE</span>
                     ) : null}
                   </span>
-                  <span className="truncate text-[11.5px] text-faint">
+                  <span className="truncate text-[12px] text-faint">
                     {lang === 'zh' ? p.noteZh : p.noteEn}
                   </span>
                 </div>
@@ -210,7 +210,7 @@ export function AccountsPage() {
       >
         {credFor ? (
           <>
-            <div className="mb-3 flex items-start gap-2 rounded-lg border border-line bg-raise px-3 py-2 text-[12px] text-muted">
+            <div className="mb-3 flex items-start gap-2 rounded-[var(--sd-r-sm)] border border-line bg-raise px-3 py-2 text-[12px] text-muted">
               <Info size={14} className="mt-0.5 shrink-0 text-brand" />
               <span>
                 {lang === 'zh' ? PLATFORM_MAP[credFor.platformId]?.noteZh : PLATFORM_MAP[credFor.platformId]?.noteEn}

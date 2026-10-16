@@ -152,7 +152,7 @@ export function QueuePage({ onEdit }: { onEdit: (id: string) => void }) {
         </Card>
       ) : (
         <Card className="overflow-hidden">
-          <div className="hidden grid-cols-[132px_minmax(0,1fr)_140px_120px_180px] gap-3 border-b border-line bg-raise px-3 py-2 text-[11.5px] font-semibold text-faint md:grid">
+          <div className="hidden grid-cols-[132px_minmax(0,1fr)_140px_120px_180px] gap-3 border-b border-line bg-raise px-3 py-2 text-[12px] font-semibold text-faint md:grid">
             <span>{t('comp.schedule')}</span>
             <span>{t('comp.content')}</span>
             <span>{t('comp.platforms')}</span>
@@ -166,12 +166,12 @@ export function QueuePage({ onEdit }: { onEdit: (id: string) => void }) {
                 key={p.id}
                 className="grid grid-cols-1 gap-2 border-b border-line px-3 py-2.5 last:border-0 hover:bg-raise/40 md:grid-cols-[132px_minmax(0,1fr)_140px_120px_180px] md:items-center md:gap-3"
               >
-                <div className="flex items-center gap-1.5 text-[11.5px] tabular-nums text-muted">
+                <div className="flex items-center gap-1.5 text-[12px] tabular-nums text-muted">
                   {overdue ? <AlertTriangle size={12} className="text-[#f59e0b]" /> : <Clock size={12} className="text-faint" />}
                   {fmtDate(p.scheduledAt ?? p.publishedAt, lang)}
                 </div>
                 <button onClick={() => onEdit(p.id)} className="min-w-0 text-left">
-                  <span className="block truncate text-[12.5px]">{p.content}</span>
+                  <span className="block truncate text-[13px]">{p.content}</span>
                 </button>
                 <div className="flex flex-wrap items-center gap-1">
                   {p.platforms.map((id) => {
@@ -232,7 +232,7 @@ export function QueuePage({ onEdit }: { onEdit: (id: string) => void }) {
       </Card>
 
       {enabledPlatforms.length === 0 ? (
-        <Card className="p-4 text-[12.5px] text-warn">{t('set.platformsHint')}</Card>
+        <Card className="p-4 text-[13px] text-warn">{t('set.platformsHint')}</Card>
       ) : null}
     </div>
   );

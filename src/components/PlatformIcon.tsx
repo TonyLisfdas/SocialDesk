@@ -18,7 +18,7 @@ export function PlatformIcon({
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 items-center justify-center rounded-[6px] font-bold leading-none text-white select-none',
+        'inline-flex shrink-0 items-center justify-center rounded-[var(--sd-r-xs)] font-bold leading-none text-white select-none',
         ring && 'ring-brand',
         className,
       )}

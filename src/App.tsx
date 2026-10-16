@@ -100,7 +100,7 @@ export default function App() {
       <Sidebar page={page} onNavigate={setPage} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar page={page} onNew={handleNew} />
-        <main className="scroll-thin flex-1 overflow-y-auto p-4">
+        <main key={page} className="page-enter scroll-thin flex-1 overflow-y-auto p-5">
           {page === 'dashboard' ? (
             <Dashboard onNavigate={setPage} onEdit={(id) => { openComposer(id); }} />
           ) : null}

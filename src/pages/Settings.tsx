@@ -158,7 +158,7 @@ export function SettingsPage() {
               <button
                 key={p.id}
                 onClick={() => togglePlatform(p.id)}
-                className="flex items-center gap-2.5 rounded-xl border px-2.5 py-2 text-left transition-all"
+                className="flex items-center gap-2.5 rounded-[var(--sd-r-md)] border px-2.5 py-2 text-left transition-all"
                 style={{
                   borderColor: on ? `color-mix(in srgb, ${p.color} 55%, transparent)` : 'var(--sd-line)',
                   background: on ? `color-mix(in srgb, ${p.color} 9%, transparent)` : 'transparent',
@@ -167,8 +167,8 @@ export function SettingsPage() {
               >
                 <PlatformIcon id={p.id} size={22} />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[12.5px] font-medium">{lang === 'zh' ? p.nameZh : p.nameEn}</span>
-                  <span className="block truncate text-[10.5px] text-faint">
+                  <span className="block truncate text-[13px] font-medium">{lang === 'zh' ? p.nameZh : p.nameEn}</span>
+                  <span className="block truncate text-[11px] text-faint">
                     {CONNECT_LABEL[p.connect][lang === 'zh' ? 'zh' : 'en']}
                   </span>
                 </span>
@@ -177,7 +177,7 @@ export function SettingsPage() {
             );
           })}
           {list.length === 0 ? (
-            <div className="col-span-full py-8 text-center text-[12.5px] text-faint">{t('common.noData')}</div>
+            <div className="col-span-full py-8 text-center text-[13px] text-faint">{t('common.noData')}</div>
           ) : null}
         </div>
       </Card>
@@ -322,8 +322,8 @@ export function SettingsPage() {
           </Button>
         </div>
         {bridge.isDesktop ? (
-          <div className="mx-4 mb-4 rounded-[10px] border border-line bg-raise/60 p-3">
-            <div className="mb-2 flex items-center gap-1.5 text-[11.5px] text-faint">
+          <div className="mx-4 mb-4 rounded-[var(--sd-r-md)] border border-line bg-raise/60 p-3">
+            <div className="mb-2 flex items-center gap-1.5 text-[12px] text-faint">
               <HardDrive size={12} /> {t('eng.dataDir')}
             </div>
             <div className="mb-2.5 break-all font-mono text-[11px] text-muted">{appInfo?.dataDir ?? '—'}</div>
@@ -344,7 +344,7 @@ export function SettingsPage() {
             </div>
           </div>
         ) : null}
-        <p className="px-4 pb-4 text-[11.5px] text-faint">
+        <p className="px-4 pb-4 text-[12px] text-faint">
           {bridge.isDesktop
             ? '数据以 JSON 文件形式保存在你自己电脑的数据目录里，不受浏览器 5MB 限制，清缓存也不会丢。素材原图存在 media/ 子目录。'
             : t('set.storageHint')}
@@ -355,7 +355,7 @@ export function SettingsPage() {
       <Card>
         <CardHead title={<span className="flex items-center gap-2"><Info size={15} />{t('set.about')}</span>} />
         <div className="px-4 pb-4">
-          <p className="text-[12.5px] leading-relaxed text-muted">
+          <p className="text-[13px] leading-relaxed text-muted">
             {bridge.isDesktop ? t('set.aboutBodyDesktop') : t('set.aboutBody')}
           </p>
           <div className="mt-3">

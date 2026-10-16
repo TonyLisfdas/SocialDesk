@@ -27,9 +27,9 @@ export const NAV: { key: PageKey; icon: typeof LayoutDashboard; group: 'content'
 
 export function Sidebar({ page, onNavigate }: { page: PageKey; onNavigate: (p: PageKey) => void }) {
   const { i18n, db, togglePlatform, enabledPlatforms, engine, engineConfig } = useStore();
-  const engineOn = !!engine?.running && !!engineConfig?.enabled;
   const t = i18n.t;
   const lang = i18n.lang;
+  const engineOn = !!engine?.running && !!engineConfig?.enabled;
 
   const groups: { key: 'content' | 'insight' | 'system'; label: string }[] = [
     { key: 'content', label: t('group.content') },
@@ -42,20 +42,23 @@ export function Sidebar({ page, onNavigate }: { page: PageKey; onNavigate: (p: P
 
   return (
     <aside className="flex h-full w-[236px] shrink-0 flex-col border-r border-line bg-panel">
-      <div className="flex items-center gap-2.5 px-4 py-4">
-        <div className="brand-grad flex h-9 w-9 items-center justify-center rounded-[10px] text-[13px] font-black text-white">
+      {/* 品牌 */}
+      <div className="flex items-center gap-2.5 px-4 pb-3 pt-4">
+        <div className="brand-grad flex h-9 w-9 items-center justify-center rounded-[var(--sd-r-md)] text-[13px] font-black text-white shadow-sm">
           SD
         </div>
         <div className="min-w-0">
-          <div className="truncate text-[13.5px] font-semibold leading-tight">SocialDesk</div>
-          <div className="truncate text-[11px] text-faint">{t('app.tagline')}</div>
+          <div className="truncate text-[14px] font-semibold leading-tight">SocialDesk</div>
+          <div className="truncate text-[12px] text-faint">{t('app.tagline')}</div>
         </div>
       </div>
 
       <nav className="scroll-thin flex-1 overflow-y-auto px-2.5 pb-3">
         {groups.map((g) => (
           <div key={g.key} className="mb-3">
-            <div className="px-2 pb-1 pt-2 text-[10.5px] font-semibold uppercase tracking-wider text-faint">{g.label}</div>
+            <div className="px-2.5 pb-1.5 pt-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-faint">
+              {g.label}
+            </div>
             {NAV.filter((n) => n.group === g.key).map((n) => {
               const Icon = n.icon;
               const active = page === n.key;
@@ -64,23 +67,26 @@ export function Sidebar({ page, onNavigate }: { page: PageKey; onNavigate: (p: P
                 <button
                   key={n.key}
                   onClick={() => onNavigate(n.key)}
-                  className={cn(
-                    'group mb-0.5 flex w-full items-center gap-2.5 rounded-[9px] px-2.5 py-[7px] text-[13px] font-medium transition-colors',
-                    active ? 'bg-brand/15 text-fg' : 'text-muted hover:bg-raise hover:text-fg',
-                  )}
+                  data-active={active}
+                  aria-current={active ? 'page' : undefined}
+                  className="nav-item hit mb-0.5"
                 >
-                  <Icon size={16} className={active ? 'text-brand' : ''} />
+                  {active ? (
+                    <span className="absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-r-full bg-brand" />
+                  ) : null}
+                  <Icon size={16} className={cn('shrink-0', active ? 'text-brand' : '')} />
                   <span className="truncate">{t(`nav.${n.key}` as never)}</span>
                   {n.key === 'engine' ? (
                     <span
                       className={cn(
                         'ml-auto h-1.5 w-1.5 rounded-full',
-                        engineOn ? 'bg-ok shadow-[0_0_6px_var(--sd-ok,#22c55e)]' : 'bg-white/25',
+                        engineOn ? 'bg-ok shadow-[0_0_6px_var(--color-ok)]' : 'bg-white/25',
                       )}
                     />
-                  ) : null}
-                  {badge > 0 ? (
-                    <span className="ml-auto rounded-full bg-brand px-1.5 text-[10.5px] font-bold text-white">{badge}</span>
+                  ) : badge > 0 ? (
+                    <span className="tnum ml-auto rounded-full bg-brand px-1.5 text-[11px] font-bold leading-[17px] text-white">
+                      {badge > 99 ? '99+' : badge}
+                    </span>
                   ) : null}
                 </button>
               );
@@ -88,40 +94,42 @@ export function Sidebar({ page, onNavigate }: { page: PageKey; onNavigate: (p: P
           </div>
         ))}
 
-        <div className="px-2 pb-1 pt-3 text-[10.5px] font-semibold uppercase tracking-wider text-faint">
+        <div className="px-2.5 pb-1.5 pt-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-faint">
           {t('dash.enabledPlatforms')}
         </div>
         <div className="space-y-0.5">
           {enabledPlatforms.map((p) => (
             <div
               key={p.id}
-              className="group flex items-center gap-2 rounded-[9px] px-2.5 py-[5px] text-[12.5px] text-muted transition-colors hover:bg-raise"
+              className="group hit relative flex min-h-[34px] items-center gap-2.5 rounded-[var(--sd-r-sm)] px-2.5 text-[13px] text-muted transition-colors hover:bg-raise hover:text-fg"
             >
               <PlatformIcon id={p.id} size={17} />
               <span className="truncate">{lang === 'zh' ? p.nameZh : p.nameEn}</span>
               <button
                 onClick={() => togglePlatform(p.id)}
                 title={t('set.hidden')}
-                className="ml-auto rounded p-1 opacity-0 transition-opacity hover:text-fg group-hover:opacity-100"
+                aria-label={t('set.hidden')}
+                className="ml-auto rounded-[var(--sd-r-xs)] p-1.5 opacity-0 transition-opacity hover:bg-raise hover:text-fg group-hover:opacity-100"
               >
                 <EyeOff size={13} />
               </button>
             </div>
           ))}
           {enabledPlatforms.length === 0 ? (
-            <div className="px-2.5 py-2 text-[11.5px] text-faint">{t('set.showNone')}</div>
+            <div className="px-2.5 py-2 text-[12px] text-faint">{t('set.showNone')}</div>
           ) : null}
         </div>
       </nav>
 
+      {/* 平台显示入口 */}
       <button
         onClick={() => onNavigate('settings')}
-        className="m-2.5 flex items-center gap-2 rounded-[10px] border border-line bg-raise px-3 py-2.5 text-left transition-colors hover:border-brand"
+        className="hit m-2.5 flex items-center gap-2.5 rounded-[var(--sd-r-md)] border border-line bg-raise px-3 py-2.5 text-left transition-colors hover:border-[color-mix(in_srgb,var(--sd-brand)_50%,transparent)]"
       >
         <Sparkles size={14} className="text-brand" />
         <span className="min-w-0 flex-1">
-          <span className="block text-[12px] font-semibold">{t('set.platforms')}</span>
-          <span className="block text-[10.5px] text-faint">
+          <span className="block text-[13px] font-semibold">{t('set.platforms')}</span>
+          <span className="tnum block text-[12px] text-faint">
             {enabledPlatforms.length}/{PLATFORMS.length}
           </span>
         </span>

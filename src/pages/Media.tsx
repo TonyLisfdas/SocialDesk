@@ -172,7 +172,7 @@ export function MediaPage({ onInsertToDraft }: { onInsertToDraft: (mediaId: stri
                   <img src={m.url} alt={m.name} className="h-full w-full object-cover" />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center" style={{ background: m.gradient }}>
-                    <span className="rounded bg-black/30 px-2 py-1 text-[10px] font-bold text-white">{m.type === 'video' ? 'VIDEO' : 'IMG'}</span>
+                    <span className="rounded bg-black/30 px-2 py-1 text-[11px] font-bold text-white">{m.type === 'video' ? 'VIDEO' : 'IMG'}</span>
                   </div>
                 )}
                 <div className="absolute inset-x-0 bottom-0 flex items-center gap-1 bg-gradient-to-t from-black/80 to-transparent p-1.5 opacity-0 transition-opacity group-hover:opacity-100">
@@ -198,7 +198,7 @@ export function MediaPage({ onInsertToDraft }: { onInsertToDraft: (mediaId: stri
                       setTagEdit(tagEdit === m.id ? null : m.id);
                       setTagInput('');
                     }}
-                    className="text-[10.5px] text-faint hover:text-fg"
+                    className="text-[11px] text-faint hover:text-fg"
                   >
                     <Plus size={10} className="inline" />
                   </button>
@@ -219,7 +219,7 @@ export function MediaPage({ onInsertToDraft }: { onInsertToDraft: (mediaId: stri
                     className="input mt-1 h-6 px-1.5 text-[11px]"
                   />
                 ) : null}
-                <div className="mt-1 text-[10.5px] text-faint">{m.size}</div>
+                <div className="mt-1 text-[11px] text-faint">{m.size}</div>
               </div>
             </div>
           ))}
@@ -228,7 +228,7 @@ export function MediaPage({ onInsertToDraft }: { onInsertToDraft: (mediaId: stri
 
       <Card className="p-4">
         <SectionLabel>{t('set.storage')}</SectionLabel>
-        <p className="text-[12.5px] text-muted">{t('media.storedHint')}</p>
+        <p className="text-[13px] text-muted">{t('media.storedHint')}</p>
       </Card>
 
       <Modal open={showUrl} onClose={() => setShowUrl(false)} title={t('media.addUrl')} width={520}>
@@ -246,7 +246,7 @@ export function MediaPage({ onInsertToDraft }: { onInsertToDraft: (mediaId: stri
           <Button variant="ghost" onClick={() => setShowUrl(false)}>{t('common.cancel')}</Button>
           <Button variant="primary" onClick={addUrl}><FolderOpen size={14} /> {t('common.add')}</Button>
         </div>
-        <p className="mt-3 text-[11.5px] text-faint">{t('media.storedHint')}</p>
+        <p className="mt-3 text-[12px] text-faint">{t('media.storedHint')}</p>
       </Modal>
     </div>
   );

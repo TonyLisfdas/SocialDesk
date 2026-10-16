@@ -139,7 +139,7 @@ export function Calendar({
         <div className="ml-auto flex items-center gap-2">
           <Button size="sm" variant={showFilter ? 'primary' : 'default'} onClick={() => setShowFilter((v) => !v)}>
             <Filter size={14} /> {t('common.filter')}
-            {platformFilter.length ? <span className="rounded-full bg-white/20 px-1.5 text-[10px]">{platformFilter.length}</span> : null}
+            {platformFilter.length ? <span className="rounded-full bg-white/20 px-1.5 text-[11px]">{platformFilter.length}</span> : null}
           </Button>
           <Segmented
             value={view}
@@ -203,7 +203,7 @@ export function Calendar({
         <Card className="overflow-hidden">
           <div className="grid grid-cols-7 border-b border-line bg-raise">
             {weekdayLabels.map((w) => (
-              <div key={w} className="px-2 py-2 text-center text-[11.5px] font-semibold text-faint">{w}</div>
+              <div key={w} className="px-2 py-2 text-center text-[12px] font-semibold text-faint">{w}</div>
             ))}
           </div>
           <div className="grid grid-cols-7">
@@ -223,7 +223,7 @@ export function Calendar({
                 >
                   <div className="mb-1 flex items-center justify-between">
                     <span
-                      className="flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[11.5px] tabular-nums"
+                      className="flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[12px] tabular-nums"
                       style={{
                         background: isToday ? 'var(--sd-brand)' : 'transparent',
                         color: isToday ? '#fff' : 'var(--sd-muted)',
@@ -232,7 +232,7 @@ export function Calendar({
                     >
                       {d.getDate()}
                     </span>
-                    {items.length > 2 ? <span className="text-[10px] text-faint">{items.length}</span> : null}
+                    {items.length > 2 ? <span className="text-[11px] text-faint">{items.length}</span> : null}
                   </div>
                   <div className="flex flex-col gap-1">
                     {items.slice(0, 3).map((p) => {
@@ -247,7 +247,7 @@ export function Calendar({
                             e.stopPropagation();
                             onEdit(p.id);
                           }}
-                          className="group cursor-grab rounded-md border px-1.5 py-1 text-left transition-colors active:cursor-grabbing"
+                          className="group cursor-grab rounded-[var(--sd-r-xs)] border px-1.5 py-1 text-left transition-colors active:cursor-grabbing"
                           style={{
                             borderColor: dragId === p.id ? 'var(--sd-brand)' : 'var(--sd-line)',
                             background: 'var(--sd-raise)',
@@ -256,7 +256,7 @@ export function Calendar({
                         >
                           <div className="flex items-center gap-1">
                             {overdue ? <AlertCircle size={10} className="shrink-0 text-[#f59e0b]" /> : null}
-                            <span className="text-[10px] tabular-nums text-faint">{fmtTime(p.scheduledAt ?? p.publishedAt)}</span>
+                            <span className="text-[11px] tabular-nums text-faint">{fmtTime(p.scheduledAt ?? p.publishedAt)}</span>
                             <div className="ml-auto flex shrink-0 -space-x-1">
                               {p.platforms.slice(0, 3).map((id) => (
                                 <PlatformIcon key={id} id={id} size={11} className="ring-1 ring-raise" />
@@ -268,14 +268,14 @@ export function Calendar({
                       );
                     })}
                     {items.length > 3 ? (
-                      <div className="px-1 text-[10.5px] text-faint">+{items.length - 3} {t('common.more')}</div>
+                      <div className="px-1 text-[11px] text-faint">+{items.length - 3} {t('common.more')}</div>
                     ) : null}
                   </div>
                 </div>
               );
             })}
           </div>
-          <div className="flex flex-wrap items-center gap-3 px-3 py-2 text-[11.5px] text-faint">
+          <div className="flex flex-wrap items-center gap-3 px-3 py-2 text-[12px] text-faint">
             <span className="flex items-center gap-1"><Clock size={12} /> {t('cal.dragHint')}</span>
             <span className="ml-auto flex items-center gap-2">
               {Array.from(new Set(filtered.flatMap((p) => p.platforms))).slice(0, 8).map((id) => (
@@ -306,13 +306,13 @@ export function Calendar({
                       onClick={() => onEdit(p.id)}
                       className="flex w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-raise"
                     >
-                      <span className="w-11 shrink-0 text-[11.5px] tabular-nums text-faint">{fmtTime(p.scheduledAt ?? p.publishedAt)}</span>
+                      <span className="w-11 shrink-0 text-[12px] tabular-nums text-faint">{fmtTime(p.scheduledAt ?? p.publishedAt)}</span>
                       <div className="flex shrink-0 -space-x-1">
                         {p.platforms.map((id) => (
                           <PlatformIcon key={id} id={id} size={16} className="ring-1 ring-panel" />
                         ))}
                       </div>
-                      <span className="min-w-0 flex-1 truncate text-[12.5px]">{p.content}</span>
+                      <span className="min-w-0 flex-1 truncate text-[13px]">{p.content}</span>
                       <StatusBadge status={p.status} />
                     </button>
                   ))}

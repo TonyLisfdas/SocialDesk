@@ -73,8 +73,8 @@ export function Dashboard({ onNavigate, onEdit }: { onNavigate: (p: PageKey) => 
       {/* greeting */}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-[19px] font-semibold tracking-tight">{t('dash.hello')}</h2>
-          <p className="mt-0.5 text-[12.5px] text-muted">
+          <h2 className="text-[20px] font-semibold tracking-tight">{t('dash.hello')}</h2>
+          <p className="mt-0.5 text-[13px] text-muted">
             {fmtDate(today.toISOString(), lang)} · {enabledPlatforms.length} {t('common.platforms')}
           </p>
         </div>
@@ -140,7 +140,7 @@ export function Dashboard({ onNavigate, onEdit }: { onNavigate: (p: PageKey) => 
             </ResponsiveContainer>
             <div className="flex flex-wrap gap-x-3 gap-y-1 px-4 pb-3">
               {pieData.slice(0, 6).map((d) => (
-                <span key={d.id} className="flex items-center gap-1.5 text-[11.5px] text-muted">
+                <span key={d.id} className="flex items-center gap-1.5 text-[12px] text-muted">
                   <span className="h-2 w-2 rounded-full" style={{ background: d.color }} />
                   {d.name} {d.value}
                 </span>
@@ -172,7 +172,7 @@ export function Dashboard({ onNavigate, onEdit }: { onNavigate: (p: PageKey) => 
                       <PlatformIcon key={id} id={id} size={18} className="ring-1 ring-panel" />
                     ))}
                   </div>
-                  <span className="min-w-0 flex-1 truncate text-[12.5px]">{p.content}</span>
+                  <span className="min-w-0 flex-1 truncate text-[13px]">{p.content}</span>
                   <StatusBadge status={p.status} />
                 </button>
               ))}
@@ -195,10 +195,10 @@ export function Dashboard({ onNavigate, onEdit }: { onNavigate: (p: PageKey) => 
                   onClick={() => onEdit(p.id)}
                   className="card-raise flex items-center gap-2.5 px-3 py-2 text-left transition-colors hover:border-brand"
                 >
-                  <span className="w-[74px] shrink-0 text-[11.5px] tabular-nums text-faint">
+                  <span className="w-[74px] shrink-0 text-[12px] tabular-nums text-faint">
                     {fmtDate(p.scheduledAt, lang).slice(5)}
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-[12.5px]">{p.content}</span>
+                  <span className="min-w-0 flex-1 truncate text-[13px]">{p.content}</span>
                   <div className="flex shrink-0 -space-x-1.5">
                     {p.platforms.slice(0, 3).map((id) => (
                       <PlatformIcon key={id} id={id} size={16} className="ring-1 ring-panel" />
@@ -225,10 +225,10 @@ export function Dashboard({ onNavigate, onEdit }: { onNavigate: (p: PageKey) => 
               <div key={p.id} className="flex items-center gap-3 border-b border-line px-1 py-2 last:border-0">
                 <span className="w-5 text-[12px] font-bold text-faint">{i + 1}</span>
                 <PlatformIcon id={p.platformId} size={18} />
-                <span className="min-w-0 flex-1 truncate text-[12.5px]">{truncate(p.content, 60)}</span>
-                <span className="hidden w-24 text-right text-[11.5px] text-faint sm:block">{fmtDate(p.at, lang)}</span>
+                <span className="min-w-0 flex-1 truncate text-[13px]">{truncate(p.content, 60)}</span>
+                <span className="hidden w-24 text-right text-[12px] text-faint sm:block">{fmtDate(p.at, lang)}</span>
                 <span className="w-20 text-right text-[12px] font-semibold">{fmtNumber(p.impressions, lang)}</span>
-                <span className="w-16 text-right text-[11.5px] text-ok">{fmtNumber(p.engagements, lang)}</span>
+                <span className="w-16 text-right text-[12px] text-ok">{fmtNumber(p.engagements, lang)}</span>
               </div>
             ))}
           </div>
@@ -244,7 +244,7 @@ export function Dashboard({ onNavigate, onEdit }: { onNavigate: (p: PageKey) => 
             <Button size="sm" onClick={() => onNavigate('ideas')}><Sparkles size={13} /> {t('ideas.title')}</Button>
             <Button size="sm" onClick={() => onNavigate('inbox')}>
               <InboxIcon size={13} /> {t('inbox.title')}
-              {unread ? <span className="ml-1 rounded-full bg-brand px-1.5 text-[10px] font-bold text-white">{unread}</span> : null}
+              {unread ? <span className="ml-1 rounded-full bg-brand px-1.5 text-[11px] font-bold text-white">{unread}</span> : null}
             </Button>
             <Button size="sm" onClick={() => onNavigate('settings')}><Sparkles size={13} /> {t('set.platforms')}</Button>
           </div>

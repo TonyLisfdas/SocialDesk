@@ -125,7 +125,7 @@ export function EnginePage() {
         <div className="flex flex-wrap items-center gap-3 border-b border-line px-4 py-3.5">
           <span
             className={cn(
-              'relative inline-flex h-9 w-9 items-center justify-center rounded-[10px]',
+              'relative inline-flex h-9 w-9 items-center justify-center rounded-[var(--sd-r-md)]',
               running ? 'bg-ok/15 text-ok' : 'bg-white/10 text-faint',
             )}
           >
@@ -141,7 +141,7 @@ export function EnginePage() {
                 {running ? t('eng.running') : t('eng.stopped')}
               </Badge>
             </div>
-            <div className="mt-0.5 text-[11.5px] text-muted">{t('eng.subtitle')}</div>
+            <div className="mt-0.5 text-[12px] text-muted">{t('eng.subtitle')}</div>
           </div>
           <Button size="sm" onClick={() => void updateEngine({ enabled: !engineConfig?.enabled })}>
             {engineConfig?.enabled ? <Pause size={13} /> : <Play size={13} />}
@@ -215,7 +215,7 @@ export function EnginePage() {
               hint={t('eng.notifyHint')}
             />
             <div className="flex items-center gap-3 pt-1">
-              <span className="text-[12.5px]">{t('eng.interval')}</span>
+              <span className="text-[13px]">{t('eng.interval')}</span>
               <input
                 type="range"
                 min={5}
@@ -225,11 +225,11 @@ export function EnginePage() {
                 onChange={(e) => void updateEngine({ intervalSec: Number(e.target.value) })}
                 className="h-1 flex-1 accent-[var(--sd-brand)]"
               />
-              <span className="w-14 text-right text-[12.5px] tabular-nums text-muted">
+              <span className="w-14 text-right text-[13px] tabular-nums text-muted">
                 {engineConfig?.intervalSec ?? 20} {t('eng.intervalUnit')}
               </span>
             </div>
-            <p className="text-[11.5px] text-faint">{t('eng.intervalHint')}</p>
+            <p className="text-[12px] text-faint">{t('eng.intervalHint')}</p>
           </div>
         </Card>
 
@@ -257,17 +257,17 @@ export function EnginePage() {
               value={appInfo?.logFile ?? '—'}
               onOpen={() => void bridge.openPath(appInfo?.logFile ?? '')}
             />
-            <div className="rounded-[10px] border border-line bg-raise/60 p-2.5">
+            <div className="rounded-[var(--sd-r-md)] border border-line bg-raise/60 p-2.5">
               <div className="mb-1.5 flex items-center justify-between">
                 <span className="text-[12px] font-medium">{t('eng.backups')}</span>
                 <span className="text-[11px] text-faint">{backups.length}</span>
               </div>
               <div className="scroll-thin max-h-[132px] space-y-1 overflow-y-auto">
                 {backups.length === 0 ? (
-                  <div className="py-2 text-[11.5px] text-faint">—</div>
+                  <div className="py-2 text-[12px] text-faint">—</div>
                 ) : (
                   backups.slice(0, 20).map((b) => (
-                    <div key={b.name} className="flex items-center gap-2 rounded-[7px] px-1.5 py-1 text-[11.5px] hover:bg-raise">
+                    <div key={b.name} className="flex items-center gap-2 rounded-[var(--sd-r-sm)] px-1.5 py-1 text-[12px] hover:bg-raise">
                       <span className="truncate text-muted">{b.name.replace(/^backup-/, '').replace(/\.json$/, '')}</span>
                       <span className="ml-auto shrink-0 text-faint">{fmtBytes(b.bytes)}</span>
                       <button
@@ -294,7 +294,7 @@ export function EnginePage() {
           icon={<ShieldCheck size={14} className="text-brand" />}
         />
         <div className="overflow-x-auto px-4 pb-4">
-          <table className="w-full min-w-[560px] border-collapse text-[12.5px]">
+          <table className="w-full min-w-[560px] border-collapse text-[13px]">
             <thead>
               <tr className="text-left text-[11px] uppercase tracking-wide text-faint">
                 <th className="pb-2 pl-1 font-semibold">{t('eng.channelCol')}</th>
@@ -318,7 +318,7 @@ export function EnginePage() {
                       </div>
                     </td>
                     <td className="py-2">
-                      <span className={cn('rounded-[6px] px-2 py-[3px] text-[11px] font-medium', meta.tone)}>
+                      <span className={cn('rounded-[var(--sd-r-xs)] px-2 py-[3px] text-[11px] font-medium', meta.tone)}>
                         {lang === 'zh' ? meta.zh : meta.en}
                       </span>
                     </td>
@@ -346,7 +346,7 @@ export function EnginePage() {
                 .reverse()
                 .slice(0, 12)
                 .map((r, i) => (
-                  <div key={`${r.postId}-${i}`} className="flex items-center gap-2 rounded-[8px] bg-raise/60 px-2.5 py-1.5 text-[11.5px]">
+                  <div key={`${r.postId}-${i}`} className="flex items-center gap-2 rounded-[var(--sd-r-sm)] bg-raise/60 px-2.5 py-1.5 text-[12px]">
                     {r.ok ? <CheckCircle2 size={12} className="text-ok" /> : <AlertTriangle size={12} className="text-danger" />}
                     <span className="truncate text-muted">{r.summary}</span>
                     <span className="ml-auto shrink-0 text-faint">{fmtDate(r.at, lang)}</span>
@@ -374,7 +374,7 @@ export function EnginePage() {
             }
           />
           <div className="px-4 pb-4">
-            <div className="scroll-thin h-[260px] overflow-y-auto rounded-[10px] border border-line bg-[#07090d] p-2.5 font-mono text-[11px] leading-relaxed">
+            <div className="scroll-thin h-[260px] overflow-y-auto rounded-[var(--sd-r-md)] border border-line bg-[#07090d] p-2.5 font-mono text-[11px] leading-relaxed">
               {logs.length === 0 ? (
                 <div className="text-faint">{t('eng.logsEmpty')}</div>
               ) : (
@@ -397,22 +397,22 @@ export function EnginePage() {
       {/* ============ 运行环境 ============ */}
       <Card>
         <CardHead title={t('eng.runtime')} icon={<Info size={14} className="text-brand" />} />
-        <div className="grid gap-2 px-4 pb-4 text-[11.5px] text-muted md:grid-cols-2">
-          <div className="flex justify-between rounded-[8px] bg-raise/60 px-3 py-1.5">
+        <div className="grid gap-2 px-4 pb-4 text-[12px] text-muted md:grid-cols-2">
+          <div className="flex justify-between rounded-[var(--sd-r-sm)] bg-raise/60 px-3 py-1.5">
             <span className="text-faint">SocialDesk</span>
             <span>v{appInfo?.version ?? '—'}</span>
           </div>
-          <div className="flex justify-between rounded-[8px] bg-raise/60 px-3 py-1.5">
+          <div className="flex justify-between rounded-[var(--sd-r-sm)] bg-raise/60 px-3 py-1.5">
             <span className="text-faint">Electron / Node</span>
             <span>
               {appInfo?.versions?.electron ?? '—'} / {appInfo?.versions?.node ?? '—'}
             </span>
           </div>
-          <div className="flex justify-between rounded-[8px] bg-raise/60 px-3 py-1.5">
+          <div className="flex justify-between rounded-[var(--sd-r-sm)] bg-raise/60 px-3 py-1.5">
             <span className="text-faint">{t('eng.dbFile')}</span>
             <span className="truncate">{appInfo?.dbFile ?? '—'}</span>
           </div>
-          <div className="flex justify-between rounded-[8px] bg-raise/60 px-3 py-1.5">
+          <div className="flex justify-between rounded-[var(--sd-r-sm)] bg-raise/60 px-3 py-1.5">
             <span className="text-faint">平台总数 / 通道</span>
             <span>
               {PLATFORMS.length} / {Object.keys(channelMap).filter((k) => channelMap[k] !== 'manual').length}
@@ -435,11 +435,11 @@ function Metric({
 }) {
   return (
     <div className="px-4 py-3">
-      <div className="flex items-center gap-1.5 text-[11.5px] text-faint">
+      <div className="flex items-center gap-1.5 text-[12px] text-faint">
         {icon}
         {label}
       </div>
-      <div className={cn('mt-1 text-[19px] font-semibold tabular-nums', accent)}>{value}</div>
+      <div className={cn('mt-1 text-[20px] font-semibold tabular-nums', accent)}>{value}</div>
       {sub ? <div className="mt-0.5 line-clamp-2 text-[11px] text-faint">{sub}</div> : null}
     </div>
   );
@@ -454,11 +454,11 @@ function PathRow({
   onOpen: () => void;
 }) {
   return (
-    <div className="flex items-center gap-2 rounded-[10px] border border-line bg-raise/60 px-2.5 py-2">
+    <div className="flex items-center gap-2 rounded-[var(--sd-r-md)] border border-line bg-raise/60 px-2.5 py-2">
       <span className="text-faint">{icon}</span>
       <div className="min-w-0 flex-1">
-        <div className="text-[10.5px] uppercase tracking-wide text-faint">{label}</div>
-        <div className="truncate text-[11.5px]">{value}</div>
+        <div className="text-[11px] uppercase tracking-wide text-faint">{label}</div>
+        <div className="truncate text-[12px]">{value}</div>
       </div>
       <Button size="sm" variant="ghost" onClick={onOpen}>
         <FolderOpen size={12} />

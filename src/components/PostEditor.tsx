@@ -202,7 +202,7 @@ export function PostEditor({
               rows={7}
               className="input"
             />
-            <div className="mt-2 flex flex-wrap items-center gap-2 text-[11.5px]">
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-[12px]">
               <span className="text-faint">
                 {effectiveContent.length} {t('comp.charCount')}
               </span>
@@ -229,7 +229,7 @@ export function PostEditor({
 
           {/* 平台选择 */}
           <div className="card p-4">
-            <SectionLabel right={<span className="text-[11.5px] text-faint">{visible.length} {t('common.platforms')}</span>}>
+            <SectionLabel right={<span className="text-[12px] text-faint">{visible.length} {t('common.platforms')}</span>}>
               {t('comp.platforms')}
             </SectionLabel>
             <div className="flex flex-wrap gap-1.5">
@@ -253,7 +253,7 @@ export function PostEditor({
                 );
               })}
             </div>
-            <p className="mt-2 text-[11.5px] text-faint">
+            <p className="mt-2 text-[12px] text-faint">
               {t('set.platformsHint')}
             </p>
           </div>
@@ -272,7 +272,7 @@ export function PostEditor({
             {mediaIds.length === 0 ? (
               <button
                 onClick={() => setShowMedia(true)}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-line2 py-6 text-[12.5px] text-faint transition-colors hover:border-brand hover:text-muted"
+                className="flex w-full items-center justify-center gap-2 rounded-[var(--sd-r-md)] border border-dashed border-line2 py-6 text-[13px] text-faint transition-colors hover:border-brand hover:text-muted"
               >
                 <ImageIcon size={16} /> {t('comp.noMedia')}
               </button>
@@ -282,7 +282,7 @@ export function PostEditor({
                   const m = db.media.find((x) => x.id === id);
                   if (!m) return null;
                   return (
-                    <div key={id} className="relative h-16 w-16 overflow-hidden rounded-lg border border-line">
+                    <div key={id} className="relative h-16 w-16 overflow-hidden rounded-[var(--sd-r-sm)] border border-line">
                       {m.dataUrl ? (
                         <img src={m.dataUrl} alt={m.name} className="h-full w-full object-cover" />
                       ) : m.url ? (
@@ -348,7 +348,7 @@ export function PostEditor({
                 />
                 {suggestions.length ? (
                   <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                    <span className="flex items-center gap-1 text-[11.5px] text-faint">
+                    <span className="flex items-center gap-1 text-[12px] text-faint">
                       <Sparkles size={12} /> {t('comp.suggestTime')}:
                     </span>
                     {suggestions.map((s) => (
@@ -371,11 +371,11 @@ export function PostEditor({
         {/* ---------------- 右：预览 ---------------- */}
         <div className="flex flex-col gap-4">
           <div className="card p-4">
-            <SectionLabel right={<span className="flex items-center gap-1 text-[11.5px] text-faint"><Eye size={12} />{t('comp.preview')}</span>}>
+            <SectionLabel right={<span className="flex items-center gap-1 text-[12px] text-faint"><Eye size={12} />{t('comp.preview')}</span>}>
               {t('comp.preview')}
             </SectionLabel>
             {visible.length === 0 ? (
-              <div className="py-8 text-center text-[12.5px] text-faint">{t('comp.noPlatform')}</div>
+              <div className="py-8 text-center text-[13px] text-faint">{t('comp.noPlatform')}</div>
             ) : (
               <div className="flex flex-col gap-3">
                 {visible.map((id) => (
@@ -395,7 +395,7 @@ export function PostEditor({
                   {db.ideas.filter((i) => !i.converted).map((idea) => (
                     <button
                       key={idea.id}
-                      className="card-raise px-3 py-2 text-left text-[12.5px] hover:border-brand"
+                      className="card-raise px-3 py-2 text-left text-[13px] hover:border-brand"
                       onClick={() => {
                         setContent((c) => (c ? `${c}\n${idea.text}` : idea.text));
                         setShowIdeas(false);
@@ -414,7 +414,7 @@ export function PostEditor({
       </div>
 
       {/* 操作栏 */}
-      <div className="sticky bottom-0 z-10 flex flex-wrap items-center gap-2 rounded-xl border border-line bg-panel/95 p-3 backdrop-blur">
+      <div className="sticky bottom-0 z-10 flex flex-wrap items-center gap-2 rounded-[var(--sd-r-md)] border border-line bg-panel/95 p-3 backdrop-blur">
         <Button variant="primary" onClick={() => persist('scheduled')}>
           <CalendarClock size={15} /> {t('comp.scheduleBtn')}
         </Button>
@@ -450,7 +450,7 @@ export function PostEditor({
                 <button
                   key={m.id}
                   onClick={() => setMediaIds((ids) => (on ? ids.filter((x) => x !== m.id) : [...ids, m.id]))}
-                  className="relative aspect-square overflow-hidden rounded-lg border-2 transition-all"
+                  className="relative aspect-square overflow-hidden rounded-[var(--sd-r-sm)] border-2 transition-all"
                   style={{ borderColor: on ? 'var(--sd-brand)' : 'transparent' }}
                 >
                   {m.dataUrl ? (
@@ -459,7 +459,7 @@ export function PostEditor({
                     <img src={m.url} alt={m.name} className="h-full w-full object-cover" />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center" style={{ background: m.gradient }}>
-                      {m.type === 'video' ? <span className="text-[10px] font-bold text-white/80">VIDEO</span> : null}
+                      {m.type === 'video' ? <span className="text-[11px] font-bold text-white/80">VIDEO</span> : null}
                     </div>
                   )}
                   {on ? (
@@ -467,7 +467,7 @@ export function PostEditor({
                       <Check size={11} />
                     </span>
                   ) : null}
-                  <span className="absolute bottom-0 left-0 right-0 truncate bg-black/50 px-1.5 py-0.5 text-[10px] text-white">
+                  <span className="absolute bottom-0 left-0 right-0 truncate bg-black/50 px-1.5 py-0.5 text-[11px] text-white">
                     {m.name}
                   </span>
                 </button>
@@ -501,14 +501,14 @@ function PreviewCard({
     <div className="card-raise overflow-hidden">
       <div className="flex items-center gap-2 border-b border-line px-3 py-2">
         <PlatformIcon id={platformId} size={18} />
-        <span className="text-[12.5px] font-semibold">{lang === 'zh' ? p.nameZh : p.nameEn}</span>
+        <span className="text-[13px] font-semibold">{lang === 'zh' ? p.nameZh : p.nameEn}</span>
         <span className="ml-auto text-[11px] text-faint">{p.aspect}</span>
       </div>
       <div className="p-3">
         {media.length ? (
           <div className="mb-2 flex gap-1.5">
             {media.slice(0, 3).map((m) => (
-              <div key={m.id} className="h-16 w-16 shrink-0 overflow-hidden rounded-md">
+              <div key={m.id} className="h-16 w-16 shrink-0 overflow-hidden rounded-[var(--sd-r-xs)]">
                 {m.dataUrl ? (
                   <img src={m.dataUrl} alt="" className="h-full w-full object-cover" />
                 ) : m.url ? (
@@ -520,9 +520,9 @@ function PreviewCard({
             ))}
           </div>
         ) : null}
-        <p className="whitespace-pre-wrap break-words text-[12.5px] leading-relaxed text-fg">{shown || '…'}</p>
+        <p className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-fg">{shown || '…'}</p>
         {firstComment ? (
-          <p className="mt-2 rounded-md border border-line bg-bg px-2 py-1 text-[11.5px] text-muted">
+          <p className="mt-2 rounded-[var(--sd-r-xs)] border border-line bg-bg px-2 py-1 text-[12px] text-muted">
             <MessageSquare size={11} className="mr-1 inline" />
             {firstComment}
           </p>

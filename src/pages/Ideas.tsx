@@ -56,7 +56,7 @@ export function IdeasPage({ onConvert }: { onConvert: (ideaId: string) => void }
         </div>
       </Card>
 
-      <div className="flex items-center gap-2 text-[12.5px] text-muted">
+      <div className="flex items-center gap-2 text-[13px] text-muted">
         <span>{db.ideas.length} {t('ideas.count')}</span>
       </div>
 
@@ -69,7 +69,7 @@ export function IdeasPage({ onConvert }: { onConvert: (ideaId: string) => void }
           {db.ideas.map((idea) => (
             <div key={idea.id} className="card flex flex-col gap-2 p-3">
               <div className="flex items-start gap-2">
-                <span className="mt-0.5 rounded-lg bg-brand/15 p-1.5 text-brand"><Lightbulb size={13} /></span>
+                <span className="mt-0.5 rounded-[var(--sd-r-sm)] bg-brand/15 p-1.5 text-brand"><Lightbulb size={13} /></span>
                 <p className="min-w-0 flex-1 whitespace-pre-wrap text-[13px] leading-relaxed">{idea.text}</p>
                 {idea.converted ? <CheckCircle2 size={15} className="shrink-0 text-ok" /> : null}
               </div>
@@ -99,7 +99,7 @@ export function IdeasPage({ onConvert }: { onConvert: (ideaId: string) => void }
         </div>
       )}
 
-      <p className="text-[11.5px] text-faint">
+      <p className="text-[12px] text-faint">
         <X size={11} className="mr-1 inline" />
         {t('ideas.placeholder')}
       </p>

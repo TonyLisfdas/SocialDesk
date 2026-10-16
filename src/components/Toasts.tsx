@@ -11,7 +11,7 @@ export function Toasts() {
           key={t.id}
           onClick={() => dismissToast(t.id)}
           className={cn(
-            'animate-in pointer-events-auto flex cursor-pointer items-center gap-2 rounded-xl border px-3.5 py-2 text-[13px] font-medium shadow-xl',
+            'animate-in pointer-events-auto flex cursor-pointer items-center gap-2 rounded-[var(--sd-r-md)] border px-3.5 py-2 text-[13px] font-medium shadow-xl',
             t.tone === 'ok' && 'border-line2 bg-raise text-fg',
             t.tone === 'warn' && 'border-[color-mix(in_srgb,#f59e0b_45%,transparent)] bg-[color-mix(in_srgb,#f59e0b_14%,var(--sd-raise))] text-[#fbbf24]',
             t.tone === 'error' && 'border-[color-mix(in_srgb,#ef4444_45%,transparent)] bg-[color-mix(in_srgb,#ef4444_14%,var(--sd-raise))] text-[#f87171]',

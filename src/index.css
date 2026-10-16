@@ -16,8 +16,19 @@
   --color-danger: #ef4444;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+
+  /* 圆角：全站只用这一套，禁止再用 7/9/11/13 这类一次性数值 */
+  --radius-sd-xs: var(--sd-r-xs);
+  --radius-sd-sm: var(--sd-r-sm);
+  --radius-sd-md: var(--sd-r-md);
+  --radius-sd-card: var(--sd-r-card);
+  --radius-sd-modal: var(--sd-r-modal);
 }
 
+/* =====================================================================
+   设计令牌
+   —— 尺寸只在这里定义，组件一律引用变量，改一处全站统一
+   ===================================================================== */
 :root {
   --sd-bg: #0a0c11;
   --sd-panel: #11141b;
@@ -30,6 +41,27 @@
   --sd-brand: #6366f1;
   --sd-brand2: #8b5cf6;
   color-scheme: dark;
+
+  /* 圆角四档 + 控件内嵌圆角 */
+  --sd-r-xs: 6px; /* 徽标、极小元素 */
+  --sd-r-sm: 8px; /* 小控件、段控内部 */
+  --sd-r-md: 10px; /* 标准按钮 / 输入框 */
+  --sd-r-card: 14px; /* 卡片 */
+  --sd-r-modal: 18px; /* 弹窗 */
+
+  /* 控件高度三档 */
+  --sd-h-sm: 32px;
+  --sd-h-md: 40px;
+  --sd-h-lg: 48px;
+
+  /* 最小点击区（触控 / 鼠标都受益） */
+  --sd-hit: 44px;
+
+  /* 阴影层次 */
+  --sd-sh-1: 0 1px 2px rgb(0 0 0 / 0.35);
+  --sd-sh-2: 0 6px 20px -10px rgb(0 0 0 / 0.6);
+  --sd-sh-3: 0 24px 64px -24px rgb(0 0 0 / 0.7);
+  --sd-inner-top: inset 0 1px 0 rgb(255 255 255 / 0.035);
 }
 
 [data-theme="light"] {
@@ -44,8 +76,16 @@
   --sd-brand: #4f46e5;
   --sd-brand2: #7c3aed;
   color-scheme: light;
+
+  --sd-sh-1: 0 1px 2px rgb(16 24 40 / 0.06);
+  --sd-sh-2: 0 6px 18px -12px rgb(16 24 40 / 0.22);
+  --sd-sh-3: 0 24px 48px -24px rgb(16 24 40 / 0.28);
+  --sd-inner-top: inset 0 1px 0 rgb(255 255 255 / 0.9);
 }
 
+/* =====================================================================
+   基础层
+   ===================================================================== */
 @layer base {
   * {
     border-color: var(--sd-line);
@@ -60,7 +100,9 @@
     color: var(--sd-fg);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
+    line-height: 1.5;
   }
   ::selection {
     background: color-mix(in srgb, var(--sd-brand) 40%, transparent);
@@ -72,62 +114,122 @@
     font-family: inherit;
     font-size: inherit;
     color: inherit;
+    line-height: inherit;
   }
   input::placeholder,
   textarea::placeholder {
     color: var(--sd-faint);
   }
-  input:focus,
-  textarea:focus,
-  select:focus,
-  button:focus {
+
+  /* 鼠标点击不显示焦点环，键盘操作必须显示 —— 之前一刀切 outline:none 是错的 */
+  :focus {
     outline: none;
+  }
+  :focus-visible {
+    outline: 2px solid var(--sd-brand);
+    outline-offset: 2px;
+  }
+
+  /* 数字统一用等宽数字，表格/统计不乱跳 */
+  .tnum,
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
+/* =====================================================================
+   组件层
+   ===================================================================== */
 @layer components {
+  /* ---------- 卡片 ---------- */
   .card {
     background: var(--sd-panel);
     border: 1px solid var(--sd-line);
-    border-radius: 14px;
+    border-radius: var(--sd-r-card);
+    box-shadow: var(--sd-sh-1), var(--sd-inner-top);
   }
   .card-raise {
     background: var(--sd-raise);
     border: 1px solid var(--sd-line);
-    border-radius: 12px;
+    border-radius: var(--sd-r-md);
   }
+
+  /* ---------- 按钮：三档 32 / 40 / 48 ---------- */
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    height: 34px;
-    padding: 0 12px;
-    border-radius: 9px;
+    height: var(--sd-h-md);
+    padding: 0 14px;
+    border-radius: var(--sd-r-md);
     border: 1px solid var(--sd-line2);
     background: var(--sd-raise);
     color: var(--sd-fg);
+    font-size: 13px;
     font-weight: 500;
     white-space: nowrap;
-    transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    user-select: none;
     cursor: pointer;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.06s ease;
   }
   .btn:hover {
-    background: color-mix(in srgb, var(--sd-raise) 70%, var(--sd-line2));
+    background: color-mix(in srgb, var(--sd-raise) 68%, var(--sd-line2));
+    border-color: color-mix(in srgb, var(--sd-line2) 70%, var(--sd-fg));
+  }
+  .btn:active {
+    transform: translateY(0.5px);
   }
   .btn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
+    transform: none;
   }
+
+  .btn-sm {
+    height: var(--sd-h-sm);
+    padding: 0 10px;
+    font-size: 13px;
+    border-radius: var(--sd-r-sm);
+  }
+  .btn-lg {
+    height: var(--sd-h-lg);
+    padding: 0 20px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  /* 纯图标按钮：正方形，视觉体积小但命中区补到 44px */
+  .btn-icon {
+    padding: 0;
+    width: var(--sd-h-md);
+    flex: none;
+  }
+  .btn-icon.btn-sm {
+    width: var(--sd-h-sm);
+  }
+  .btn-icon.btn-lg {
+    width: var(--sd-h-lg);
+  }
+
   .btn-primary {
     background: linear-gradient(135deg, var(--sd-brand), var(--sd-brand2));
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--sd-brand) 80%, transparent);
+    box-shadow:
+      0 6px 18px -10px color-mix(in srgb, var(--sd-brand) 90%, transparent),
+      inset 0 1px 0 rgb(255 255 255 / 0.16);
   }
   .btn-primary:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.07);
     background: linear-gradient(135deg, var(--sd-brand), var(--sd-brand2));
+    border-color: transparent;
   }
   .btn-ghost {
     background: transparent;
@@ -137,40 +239,67 @@
   .btn-ghost:hover {
     background: var(--sd-raise);
     color: var(--sd-fg);
+    border-color: transparent;
   }
-  .btn-sm {
-    height: 28px;
-    padding: 0 9px;
-    font-size: 12.5px;
-    border-radius: 8px;
+  .btn-danger {
+    color: var(--sd-danger, #ef4444);
+    border-color: color-mix(in srgb, #ef4444 40%, transparent);
+    background: transparent;
   }
+  .btn-danger:hover {
+    background: color-mix(in srgb, #ef4444 12%, transparent);
+    border-color: color-mix(in srgb, #ef4444 55%, transparent);
+  }
+
+  /* ---------- 命中区：视觉尺寸不动，点击区补到 44px ---------- */
+  .hit {
+    position: relative;
+  }
+  .hit::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: max(100%, var(--sd-hit));
+    transform: translateY(-50%);
+  }
+
+  /* ---------- 输入框：与按钮同高 ---------- */
   .input {
     width: 100%;
-    height: 34px;
-    padding: 0 10px;
-    border-radius: 9px;
+    height: var(--sd-h-md);
+    padding: 0 12px;
+    border-radius: var(--sd-r-md);
     border: 1px solid var(--sd-line2);
     background: var(--sd-bg);
     color: var(--sd-fg);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    font-size: 13px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .input:hover {
+    border-color: color-mix(in srgb, var(--sd-line2) 70%, var(--sd-fg));
   }
   .input:focus {
     border-color: var(--sd-brand);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--sd-brand) 18%, transparent);
+    outline: none;
   }
   textarea.input {
     height: auto;
-    padding: 9px 11px;
-    line-height: 1.65;
+    padding: 11px 13px;
+    line-height: 1.7;
     resize: vertical;
   }
+
+  /* ---------- 其它小件 ---------- */
   .chip {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    height: 24px;
-    padding: 0 8px;
-    border-radius: 999px;
+    height: 26px;
+    padding: 0 9px;
+    border-radius: var(--sd-r-xs);
     font-size: 12px;
     font-weight: 500;
     border: 1px solid var(--sd-line2);
@@ -178,16 +307,43 @@
     color: var(--sd-muted);
   }
   .label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--sd-muted);
+    letter-spacing: 0.06em;
+    color: var(--sd-faint);
     text-transform: uppercase;
   }
   .divider {
     height: 1px;
     background: var(--sd-line);
   }
+
+  /* 侧边栏导航项：整行都是点击区，高度补到 44px */
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 38px;
+    padding: 0 10px;
+    border-radius: var(--sd-r-sm);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sd-muted);
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease;
+  }
+  .nav-item:hover {
+    background: var(--sd-raise);
+    color: var(--sd-fg);
+  }
+  .nav-item[data-active="true"] {
+    background: color-mix(in srgb, var(--sd-brand) 14%, transparent);
+    color: var(--sd-fg);
+  }
+
+  /* ---------- 滚动条 ---------- */
   .scroll-thin {
     scrollbar-width: thin;
     scrollbar-color: var(--sd-line2) transparent;
@@ -199,10 +355,17 @@
   .scroll-thin::-webkit-scrollbar-thumb {
     background: var(--sd-line2);
     border-radius: 99px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .scroll-thin::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--sd-line2) 60%, var(--sd-fg));
+    background-clip: content-box;
   }
   .scroll-thin::-webkit-scrollbar-track {
     background: transparent;
   }
+
   .brand-grad {
     background: linear-gradient(135deg, var(--sd-brand), var(--sd-brand2));
   }
@@ -211,6 +374,37 @@
   }
 }
 
+/* =====================================================================
+   骨架屏
+   ===================================================================== */
+.sk {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--sd-line) 85%, transparent);
+  border-radius: var(--sd-r-sm);
+}
+.sk::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--sd-fg) 8%, transparent),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: skshine 1.5s ease-in-out infinite;
+}
+@keyframes skshine {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* =====================================================================
+   动效
+   ===================================================================== */
 @keyframes sdfade {
   from {
     opacity: 0;
@@ -237,4 +431,29 @@
 }
 .animate-slide {
   animation: sdslide 0.22s ease;
+}
+
+/* 页面切换：轻微上浮淡入，避免"啪"一下换页的生硬感 */
+@keyframes sdpage {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.page-enter {
+  animation: sdpage 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

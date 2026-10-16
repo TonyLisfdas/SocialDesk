@@ -91,7 +91,7 @@ export function InboxPage() {
                 <PlatformIcon id={item.platformId} size={22} />
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="text-[12.5px] font-semibold">{item.author}</span>
+                    <span className="text-[13px] font-semibold">{item.author}</span>
                     <span className="text-[11px] text-faint">@{item.account}</span>
                     <Badge className="bg-line text-muted">
                       {typeIcon(item.type)} {t(`inbox.${item.type}` as never)}
@@ -99,7 +99,7 @@ export function InboxPage() {
                     {item.replied ? <Badge className="bg-[color-mix(in_srgb,#22c55e_16%,transparent)] text-ok">{t('inbox.replied')}</Badge> : null}
                     <span className="ml-auto text-[11px] text-faint">{relativeTime(item.at, lang)}</span>
                   </div>
-                  <p className="mt-1 whitespace-pre-wrap text-[12.5px] leading-relaxed text-muted">{item.body}</p>
+                  <p className="mt-1 whitespace-pre-wrap text-[13px] leading-relaxed text-muted">{item.body}</p>
                   {open === item.id ? (
                     <div className="mt-2 flex gap-2">
                       <input
@@ -142,7 +142,7 @@ export function InboxPage() {
         </Card>
       )}
 
-      <p className="text-[11.5px] text-faint">{truncate(t('inbox.emptyHint'), 60)}</p>
+      <p className="text-[12px] text-faint">{truncate(t('inbox.emptyHint'), 60)}</p>
     </div>
   );
 }

@@ -59,7 +59,7 @@ export function AnalyticsPage() {
             { value: '90', label: t('an.90') },
           ]}
         />
-        <span className="ml-auto text-[11.5px] text-faint">{t('an.demoNote')}</span>
+        <span className="ml-auto text-[12px] text-faint">{t('an.demoNote')}</span>
       </div>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
@@ -137,17 +137,17 @@ export function AnalyticsPage() {
 
         <Card className="p-4">
           <SectionLabel>{t('an.heat')}</SectionLabel>
-          <p className="mb-3 text-[11.5px] text-faint">{t('an.heatHint')}</p>
+          <p className="mb-3 text-[12px] text-faint">{t('an.heatHint')}</p>
           <div className="overflow-x-auto scroll-thin">
             <div className="min-w-[420px]">
               <div className="mb-1 flex pl-9">
                 {Array.from({ length: 24 }, (_, h) => (
-                  <span key={h} className="flex-1 text-center text-[8.5px] text-faint">{h % 3 === 0 ? h : ''}</span>
+                  <span key={h} className="flex-1 text-center text-[11px] text-faint">{h % 3 === 0 ? h : ''}</span>
                 ))}
               </div>
               {heatmap.map((row, w) => (
                 <div key={w} className="mb-[2px] flex items-center gap-1">
-                  <span className="w-8 shrink-0 text-[9.5px] text-faint">{weekdayLabel(new Date(2024, 0, 7 + w), lang)}</span>
+                  <span className="w-8 shrink-0 text-[11px] text-faint">{weekdayLabel(new Date(2024, 0, 7 + w), lang)}</span>
                   {row.map((v, h) => (
                     <div
                       key={h}
@@ -181,15 +181,15 @@ export function AnalyticsPage() {
             </div>
             {topPosts.map((p, i) => (
               <div key={p.id} className="grid grid-cols-[24px_24px_minmax(0,1fr)] items-center gap-2 border-b border-line px-1 py-2 last:border-0 sm:grid-cols-[24px_24px_minmax(0,1fr)_110px_90px_80px]">
-                <span className="text-[11.5px] font-bold text-faint">{i + 1}</span>
+                <span className="text-[12px] font-bold text-faint">{i + 1}</span>
                 <PlatformIcon id={p.platformId} size={18} />
                 <span className="min-w-0">
-                  <span className="block truncate text-[12.5px]">{p.content}</span>
-                  <span className="block text-[10.5px] text-faint sm:hidden">{fmtDate(p.at, lang)}</span>
+                  <span className="block truncate text-[13px]">{p.content}</span>
+                  <span className="block text-[11px] text-faint sm:hidden">{fmtDate(p.at, lang)}</span>
                 </span>
                 <span className="hidden text-right text-[12px] sm:block">{fmtNumber(p.impressions, lang)}</span>
                 <span className="hidden text-right text-[12px] text-ok sm:block">{fmtNumber(p.engagements, lang)}</span>
-                <span className="hidden text-right text-[11.5px] text-faint sm:block">{p.engRate.toFixed(2)}%</span>
+                <span className="hidden text-right text-[12px] text-faint sm:block">{p.engRate.toFixed(2)}%</span>
               </div>
             ))}
           </div>
