@@ -1,0 +1,32 @@
+# ============================================================
+# 一次性维护工具：把仓库全部提交的署名改写为 TonyLisfdas
+#
+# 使用方法（仓库所有者操作）：
+#   仓库页 → Actions → 左侧选"一次性维护：改写提交署名" → Run workflow
+#
+# 说明：
+#   - 这是"历史改写"操作：提交内容/顺序/说明/日期不变，只改作者署名
+#   - 执行后贡献者统计会重新计算为 TonyLisfdas
+#   - 本工具只在改写前的旧历史里存在；改写完成后的"新历史"不含本文件
+#   - 重复运行结果完全一致（幂等）
+# ============================================================
+name: 一次性维护：改写提交署名
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rewrite-authors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出完整历史
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: 改写署名并更新 main
+        run: bash scripts/rewrite-authors.sh
